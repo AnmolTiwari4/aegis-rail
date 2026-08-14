@@ -1,4 +1,4 @@
-from kinematics import KinematicsEngine
+from ai_engine.kinematics import KinematicsEngine
 
 class ConflictOptimizer:
     def __init__(self):
