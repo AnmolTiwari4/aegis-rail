@@ -9,13 +9,17 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 
 app = FastAPI()
 
-#final change
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all domains (Perfect for hackathons)
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Import your AI engine
