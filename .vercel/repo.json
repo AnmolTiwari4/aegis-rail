@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_mGJIJIL6nY9ukpE866CGAPjeEd9M",
+      "name": "aegis-rail",
+      "directory": "frontend",
+      "orgId": "team_jsvWRqsmkzdtB0jA8v2RX65w"
+    }
+  ]
+}
