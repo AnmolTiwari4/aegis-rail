@@ -7,6 +7,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, ValidationError
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 
+app = FastAPI()
+
+#final change
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all domains (Perfect for hackathons)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
 # Import your AI engine
 from ai_engine.optimizer import ConflictOptimizer
 
