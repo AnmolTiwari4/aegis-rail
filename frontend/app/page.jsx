@@ -19,7 +19,7 @@ export default function AegisDashboard() {
 
   useEffect(() => {
     // UPDATED: Secure WebSocket to Render production backend
-    const socket = new WebSocket("wss://aegis-rail.onrender.com/ws/stream");
+    const socket = new WebSocket("ws://localhost:8000/ws/stream");
     
     socket.onopen = () => {
       console.log("WebSocket Connected: Aegis-Rail Live Stream Active");
@@ -42,7 +42,7 @@ export default function AegisDashboard() {
     const fetchKPIs = async () => {
       try {
         // UPDATED: Secure HTTPS REST API URL
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://aegis-rail.onrender.com";
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
         const response = await fetch(`${API_URL}/api/v1/kpi`);
         if (response.ok) {
           setKpiData(await response.json());
