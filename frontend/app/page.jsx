@@ -18,7 +18,8 @@ export default function AegisDashboard() {
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/ws/stream");
+    // UPDATED: Secure WebSocket to Render production backend
+    const socket = new WebSocket("wss://aegis-rail.onrender.com/ws/stream");
     
     socket.onopen = () => {
       console.log("WebSocket Connected: Aegis-Rail Live Stream Active");
@@ -40,7 +41,8 @@ export default function AegisDashboard() {
   useEffect(() => {
     const fetchKPIs = async () => {
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        // UPDATED: Secure HTTPS REST API URL
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://aegis-rail.onrender.com";
         const response = await fetch(`${API_URL}/api/v1/kpi`);
         if (response.ok) {
           setKpiData(await response.json());
@@ -48,6 +50,7 @@ export default function AegisDashboard() {
       } catch (error) {
         console.error("Failed to fetch KPIs:", error);
       }
+      
     };
     fetchKPIs();
   }, []);
@@ -82,7 +85,8 @@ export default function AegisDashboard() {
   const handleApprove = async (actionType = "Controller Overridden & Approved") => {
     setApproved(true);
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      // UPDATED: Secure HTTPS REST API URL
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://aegis-rail.onrender.com";
       await fetch(`${API_URL}/api/v1/audit/approve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
