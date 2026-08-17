@@ -60,7 +60,7 @@ MOCK_TRAIN_ROUTES: Dict[str, dict] = {
     },
     "TR-102": {
         "train_id": "TR-102",
-        "locomotive_model": "WAG-9 High Tonnage Goods",
+        "locomotive_model": "WAG-9 High Train Weight or Total Load Goods",
         "max_speed_limit": 100.0,
         "max_capacity": 0,
         "max_weight": 5000.0,
