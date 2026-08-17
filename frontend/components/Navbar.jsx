@@ -8,21 +8,21 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'OVERVIEW' },
-    { href: '/dashboard', label: 'GOD VIEW' },
+    { href: '/dashboard', label: 'MAIN NETWORK MAP' },
     { href: '/stations', label: 'STATIONS' },
     { href: '/alerts', label: 'ALERTS CONSOLE' },
   ];
 
   return (
-    <header className="w-full bg-black border-b border-orange-500/30 sticky top-0 z-50 rounded-none">
+    <header className="w-full bg-ocean-bg border-b border-ocean-border sticky top-0 z-50 rounded-none">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 bg-orange-600 border border-orange-400 flex items-center justify-center font-bold text-black text-xl rounded-none shadow-[0_0_15px_rgba(249,115,22,0.5)]">
+          <div className="w-8 h-8 bg-ocean-mauve border border-ocean-peach flex items-center justify-center font-bold text-ocean-bg text-xl rounded-none shadow-[0_0_15px_rgba(162,117,142,0.4)]">
             A
           </div>
           <div>
-            <span className="font-extrabold text-lg tracking-wider text-white group-hover:text-orange-500 transition-colors">
+            <span className="font-extrabold text-lg tracking-wider text-ocean-light group-hover:text-ocean-peach transition-colors">
               AEGIS-RAIL
             </span>
             
@@ -39,8 +39,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-2 border transition-all rounded-none uppercase text-xs tracking-wider ${
                   isActive
-                    ? 'bg-orange-600 text-black font-bold border-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.4)]'
-                    : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:border-orange-500/50 hover:text-white'
+                    ? 'bg-ocean-mauve text-ocean-bg font-bold border-ocean-peach shadow-[0_0_10px_rgba(162,117,142,0.4)]'
+                    : 'bg-ocean-surface text-ocean-soft border-ocean-border hover:border-ocean-mauve hover:text-ocean-light'
                 }`}
               >
                 {link.label}
@@ -50,13 +50,13 @@ export default function Navbar() {
         </nav>
 
         {/* System Status Indicator */}
-        <div className="hidden md:flex items-center gap-3 border border-zinc-800 bg-zinc-950 px-3 py-1.5 rounded-none font-mono text-xs">
+        <div className="hidden md:flex items-center gap-3 border border-ocean-border bg-ocean-surface px-3 py-1.5 rounded-none font-mono text-xs">
           <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-orange-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-none h-2.5 w-2.5 bg-orange-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-ocean-peach opacity-75"></span>
+            <span className="relative inline-flex rounded-none h-2.5 w-2.5 bg-ocean-mauve"></span>
           </span>
           
-          <span className="text-orange-500 font-bold">ONLINE</span>
+          <span className="text-ocean-peach font-bold">ONLINE</span>
         </div>
       </div>
     </header>
