@@ -47,7 +47,7 @@ export default function AlertsConsolePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatusMsg('LOGGING ANOMALY OVERRIDE TO BACKEND...');
+    setStatusMsg('LOGGING Manual Alerts or Issue Management TO BACKEND...');
     try {
       const res = await fetch('http://localhost:8000/api/v1/alerts/trigger', {
         method: 'POST',
@@ -69,51 +69,49 @@ export default function AlertsConsolePage() {
   };
 
   return (
-    <div className="w-full bg-black min-h-screen p-4 md:p-6 font-mono space-y-6">
-      
+    <div className="w-full bg-ocean-bg min-h-screen p-4 md:p-6 font-mono space-y-6">
+
       {/* Header */}
-      <div className="border border-zinc-800 bg-zinc-950 p-4">
-        <h1 className="text-xl md:text-2xl font-bold uppercase text-white tracking-wider flex items-center gap-3">
-          <span className="w-3 h-3 bg-red-600 inline-block animate-pulse"></span>
-          ALERTS CONSOLE // ANOMALY DETECTOR & MANUAL OVERRIDE
+      <div className="border border-ocean-border bg-ocean-surface p-4">
+        <h1 className="text-xl md:text-2xl font-bold uppercase text-ocean-light tracking-wider flex items-center gap-3">
+          <span className="w-3 h-3 bg-ocean-mauve inline-block animate-pulse"></span>
+          ALERTS CONSOLE  System Alerts & Manual Controls
         </h1>
-        <p className="text-zinc-500 text-xs mt-1">AUTOMATED SYSTEM WARNINGS & DISPATCHER MANUAL OVERRIDES</p>
+        <p className="text-ocean-soft text-xs mt-1">AUTOMATED SYSTEM WARNINGS & DISPATCHER MANUAL OVERRIDES</p>
       </div>
 
       {/* Main Grid: Alerts Stream & Form */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Left Column: Automated Alerts Feed (2 Cols) */}
-        <div className="lg:col-span-2 border border-zinc-800 bg-zinc-950 p-6 space-y-4">
-          <h3 className="text-orange-500 font-bold text-xs uppercase tracking-wider border-b border-zinc-800 pb-3">
-            RECENT ANOMALIES & AUDIT LOG
+        <div className="lg:col-span-2 border border-ocean-border bg-ocean-surface p-6 space-y-4">
+          <h3 className="text-ocean-peach font-bold text-xs uppercase tracking-wider border-b border-ocean-border pb-3">
+            Recent Issues & Alert History
           </h3>
 
           <div className="space-y-4 max-h-[550px] overflow-y-auto pr-1">
             {alerts.map((alt) => (
               <div
                 key={alt.id}
-                className={`border p-4 space-y-2 bg-black ${
-                  alt.severity === 'CRITICAL' ? 'border-red-600/80 border-l-4 border-l-red-600' : 'border-yellow-600/80 border-l-4 border-l-yellow-600'
-                }`}
+                className={`border p-4 space-y-2 bg-ocean-bg ${alt.severity === 'CRITICAL' ? 'border-ocean-mauve border-l-4 border-l-ocean-mauve' : 'border-ocean-peach border-l-4 border-l-ocean-peach'
+                  }`}
               >
                 <div className="flex justify-between items-center text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-bold">{alt.id}</span>
-                    <span className="text-orange-500 font-bold">[{alt.train_id}]</span>
+                    <span className="text-ocean-light font-bold">{alt.id}</span>
+                    <span className="text-ocean-peach font-bold">[{alt.train_id}]</span>
                   </div>
-                  <span className={`px-2 py-0.5 text-[10px] font-bold ${
-                    alt.severity === 'CRITICAL' ? 'bg-red-950 text-red-400 border border-red-800' : 'bg-yellow-950 text-yellow-400 border border-yellow-800'
-                  }`}>
+                  <span className={`px-2 py-0.5 text-[10px] font-bold ${alt.severity === 'CRITICAL' ? 'bg-ocean-mauve/20 text-ocean-mauve border border-ocean-mauve' : 'bg-ocean-peach/20 text-ocean-peach border border-ocean-peach'
+                    }`}>
                     {alt.severity}
                   </span>
                 </div>
 
-                <div className="text-sm font-bold text-zinc-200">{alt.alert_type}</div>
-                <p className="text-xs text-zinc-400 leading-relaxed">{alt.description}</p>
+                <div className="text-sm font-bold text-ocean-light">{alt.alert_type}</div>
+                <p className="text-xs text-ocean-soft leading-relaxed">{alt.description}</p>
 
-                <div className="flex justify-between items-center text-[10px] text-zinc-500 border-t border-zinc-900 pt-2 mt-2">
-                  <span>LOCATION: <strong className="text-zinc-300">{alt.location}</strong></span>
+                <div className="flex justify-between items-center text-[10px] text-ocean-soft border-t border-ocean-border pt-2 mt-2">
+                  <span>LOCATION: <strong className="text-ocean-light">{alt.location}</strong></span>
                   <span>TIMESTAMP: {new Date(alt.timestamp).toLocaleTimeString()}</span>
                 </div>
               </div>
@@ -122,35 +120,35 @@ export default function AlertsConsolePage() {
         </div>
 
         {/* Right Column: Manual Override Trigger Form (1 Col) */}
-        <div className="border border-zinc-800 bg-zinc-950 p-6 space-y-4">
-          <h3 className="text-orange-500 font-bold text-xs uppercase tracking-wider border-b border-zinc-800 pb-3">
-            LOG MANUAL ANOMALY OVERRIDE
+        <div className="border border-ocean-border bg-ocean-surface p-6 space-y-4">
+          <h3 className="text-ocean-peach font-bold text-xs uppercase tracking-wider border-b border-ocean-border pb-3">
+            Create Custom Alert or Report Issue
           </h3>
 
           {statusMsg && (
-            <div className="p-2 border border-orange-500/50 bg-orange-950/40 text-orange-400 text-xs font-bold">
+            <div className="p-2 border border-ocean-mauve bg-ocean-mauve/20 text-ocean-peach text-xs font-bold">
               {statusMsg}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4 text-xs">
             <div>
-              <label className="block text-zinc-400 mb-1">TARGET LOCOMOTIVE ID</label>
+              <label className="block text-ocean-soft mb-1">Train Number or Train ID</label>
               <input
                 type="text"
                 value={formData.train_id}
                 onChange={(e) => setFormData({ ...formData, train_id: e.target.value })}
                 required
-                className="w-full bg-black border border-zinc-800 text-white p-2.5 focus:border-orange-500 outline-none"
+                className="w-full bg-ocean-bg border border-ocean-border text-ocean-light p-2.5 focus:border-ocean-mauve outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">ANOMALY CATEGORY</label>
+              <label className="block text-ocean-soft mb-1">Issue Type</label>
               <select
                 value={formData.alert_type}
                 onChange={(e) => setFormData({ ...formData, alert_type: e.target.value })}
-                className="w-full bg-black border border-zinc-800 text-white p-2.5 focus:border-orange-500 outline-none"
+                className="w-full bg-ocean-bg border border-ocean-border text-ocean-light p-2.5 focus:border-ocean-mauve outline-none"
               >
                 <option value="SPEED_VIOLATION">SPEED_VIOLATION</option>
                 <option value="ROUTE_DEV">ROUTE_DEV</option>
@@ -160,11 +158,11 @@ export default function AlertsConsolePage() {
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">SEVERITY LEVEL</label>
+              <label className="block text-ocean-soft mb-1">Alert Level or Priority</label>
               <select
                 value={formData.severity}
                 onChange={(e) => setFormData({ ...formData, severity: e.target.value })}
-                className="w-full bg-black border border-zinc-800 text-white p-2.5 focus:border-orange-500 outline-none"
+                className="w-full bg-ocean-bg border border-ocean-border text-ocean-light p-2.5 focus:border-ocean-mauve outline-none"
               >
                 <option value="CRITICAL">CRITICAL</option>
                 <option value="WARNING">WARNING</option>
@@ -173,32 +171,32 @@ export default function AlertsConsolePage() {
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">LOCATION / TRACK SECTOR</label>
+              <label className="block text-ocean-soft mb-1">LOCATION / TRACK SECTOR</label>
               <input
                 type="text"
                 placeholder="e.g. Kanpur Switch B-4"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 required
-                className="w-full bg-black border border-zinc-800 text-white p-2.5 focus:border-orange-500 outline-none"
+                className="w-full bg-ocean-bg border border-ocean-border text-ocean-light p-2.5 focus:border-ocean-mauve outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">DISPATCHER AUDIT DESCRIPTION</label>
+              <label className="block text-ocean-soft mb-1">DISPATCHER AUDIT DESCRIPTION</label>
               <textarea
                 rows={3}
                 placeholder="Provide detailed context for manual dispatch record..."
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 required
-                className="w-full bg-black border border-zinc-800 text-white p-2.5 focus:border-orange-500 outline-none resize-none"
+                className="w-full bg-ocean-bg border border-ocean-border text-ocean-light p-2.5 focus:border-ocean-mauve outline-none resize-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-orange-600 hover:bg-orange-500 text-black font-extrabold p-3 uppercase tracking-wider border border-orange-400 transition-all shadow-[0_0_15px_rgba(249,115,22,0.4)]"
+              className="w-full bg-ocean-mauve hover:bg-ocean-mauve/80 text-ocean-bg font-extrabold p-3 uppercase tracking-wider border border-ocean-peach transition-all shadow-[0_0_15px_rgba(162,117,142,0.4)]"
             >
               DISPATCH OVERRIDE ALERT →
             </button>
