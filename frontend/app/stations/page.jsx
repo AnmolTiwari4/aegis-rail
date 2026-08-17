@@ -29,16 +29,16 @@ export default function StationControlPage() {
   const stationsList = ['NDLS', 'CSTM', 'MAS', 'HWH'];
 
   return (
-    <div className="w-full bg-black min-h-screen p-4 md:p-6 font-mono space-y-6">
-      
+    <div className="w-full bg-ocean-bg min-h-screen p-4 md:p-6 font-mono space-y-6">
+
       {/* Header & Station Selector */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-zinc-800 bg-zinc-950 p-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-ocean-border bg-ocean-surface p-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold uppercase text-white tracking-wider flex items-center gap-3">
-            <span className="w-3 h-3 bg-orange-500 inline-block"></span>
-            STATION CONTROL HUB // PLATFORM ALLOCATION
+          <h1 className="text-xl md:text-2xl font-bold uppercase text-ocean-light tracking-wider flex items-center gap-3">
+            <span className="w-3 h-3 bg-ocean-mauve inline-block"></span>
+            STATION CONTROL HUB  PLATFORM ALLOCATION
           </h1>
-          <p className="text-zinc-500 text-xs mt-1">INBOUND/OUTBOUND MANIFESTS & GANTT CLEARANCE</p>
+          <p className="text-ocean-soft text-xs mt-1">Arrivals, Departures & Schedules</p>
         </div>
 
         {/* Station Tabs */}
@@ -47,11 +47,10 @@ export default function StationControlPage() {
             <button
               key={stn}
               onClick={() => setSelectedStation(stn)}
-              className={`px-4 py-2 border text-xs font-bold uppercase transition-all ${
-                selectedStation === stn
-                  ? 'bg-orange-600 border-orange-400 text-black shadow-[0_0_10px_rgba(249,115,22,0.4)]'
-                  : 'bg-black border-zinc-800 text-zinc-400 hover:border-orange-500/50 hover:text-white'
-              }`}
+              className={`px-4 py-2 border text-xs font-bold uppercase transition-all ${selectedStation === stn
+                ? 'bg-ocean-mauve border-ocean-peach text-ocean-bg shadow-[0_0_10px_rgba(162,117,142,0.4)]'
+                : 'bg-ocean-bg border-ocean-border text-ocean-soft hover:border-ocean-mauve hover:text-ocean-light'
+                }`}
             >
               {stn}
             </button>
@@ -61,14 +60,14 @@ export default function StationControlPage() {
 
       {/* Main Grid: Platform Allocation Gantt Chart & Manifest Table */}
       <div className="space-y-6">
-        
+
         {/* Platform Allocation Gantt Chart Visualizer */}
-        <div className="border border-zinc-800 bg-zinc-950 p-6 space-y-4">
-          <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
-            <h3 className="text-orange-500 font-bold text-xs uppercase tracking-wider">
-              PLATFORM OCCUPANCY GANTT CHART ({stationData?.station_name})
+        <div className="border border-ocean-border bg-ocean-surface p-6 space-y-4">
+          <div className="flex justify-between items-center border-b border-ocean-border pb-3">
+            <h3 className="text-ocean-peach font-bold text-xs uppercase tracking-wider">
+              Platform Schedule Timeline ({stationData?.station_name})
             </h3>
-            <span className="text-zinc-500 text-[10px]">TIME AXIS: 09:00 - 13:00 HRS</span>
+            <span className="text-ocean-soft text-[10px]">TIME AXIS: 09:00 - 13:00 HRS</span>
           </div>
 
           {/* Gantt Matrix Grid */}
@@ -78,18 +77,17 @@ export default function StationControlPage() {
 
               return (
                 <div key={platformNum} className="flex items-center gap-4 text-xs">
-                  <div className="w-24 border border-zinc-800 bg-black p-2 text-center font-bold text-zinc-300">
+                  <div className="w-24 border border-ocean-border bg-ocean-bg p-2 text-center font-bold text-ocean-soft">
                     PLATFORM {platformNum}
                   </div>
 
-                  <div className="flex-1 h-10 border border-zinc-900 bg-black relative flex items-center px-2">
+                  <div className="flex-1 h-10 border border-ocean-border bg-ocean-bg relative flex items-center px-2">
                     {assignedTrain ? (
                       <div
-                        className={`absolute h-7 px-3 flex items-center justify-between border font-bold text-[11px] ${
-                          assignedTrain.status === 'INBOUND'
-                            ? 'bg-orange-950/80 border-orange-500 text-orange-300'
-                            : 'bg-zinc-900 border-zinc-600 text-zinc-200'
-                        }`}
+                        className={`absolute h-7 px-3 flex items-center justify-between border font-bold text-[11px] ${assignedTrain.status === 'INBOUND'
+                          ? 'bg-ocean-mauve/30 border-ocean-mauve text-ocean-peach'
+                          : 'bg-ocean-surface border-ocean-border text-ocean-light'
+                          }`}
                         style={{
                           left: `${(platformNum * 12) % 60}%`,
                           width: '35%'
@@ -99,7 +97,7 @@ export default function StationControlPage() {
                         <span className="text-[10px] opacity-80">{assignedTrain.eta}</span>
                       </div>
                     ) : (
-                      <span className="text-zinc-700 text-[10px] italic">CLEAR / UNALLOCATED</span>
+                      <span className="text-ocean-medium text-[10px] italic">CLEAR / UNALLOCATED</span>
                     )}
                   </div>
                 </div>
@@ -109,38 +107,37 @@ export default function StationControlPage() {
         </div>
 
         {/* Inbound/Outbound Manifest Table */}
-        <div className="border border-zinc-800 bg-zinc-950 p-6 space-y-4">
-          <h3 className="text-orange-500 font-bold text-xs uppercase tracking-wider border-b border-zinc-800 pb-3">
-            STATION INBOUND / OUTBOUND MANIFEST
+        <div className="border border-ocean-border bg-ocean-surface p-6 space-y-4">
+          <h3 className="text-ocean-peach font-bold text-xs uppercase tracking-wider border-b border-ocean-border pb-3">
+            Arrival & Departure List
           </h3>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono border-collapse">
               <thead>
-                <tr className="border-b border-zinc-800 text-zinc-500 bg-black">
+                <tr className="border-b border-ocean-border text-ocean-soft bg-ocean-bg">
                   <th className="p-3">LOCOMOTIVE ID</th>
                   <th className="p-3">ASSIGNED PLATFORM</th>
                   <th className="p-3">TRAIN TYPE</th>
                   <th className="p-3">SCHEDULED ETA</th>
                   <th className="p-3">STATUS</th>
-                  <th className="p-3">DELAY DELTA</th>
+                  <th className="p-3">Delay Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-900">
+              <tbody className="divide-y divide-ocean-border">
                 {stationData?.manifest.map((row) => (
-                  <tr key={row.train_id} className="hover:bg-zinc-900/50 transition-colors">
-                    <td className="p-3 font-bold text-white">{row.train_id}</td>
-                    <td className="p-3 text-orange-400 font-bold">PLATFORM #{row.platform}</td>
-                    <td className="p-3 text-zinc-400">{row.type}</td>
-                    <td className="p-3 text-white">{row.eta}</td>
+                  <tr key={row.train_id} className="hover:bg-ocean-hover/50 transition-colors">
+                    <td className="p-3 font-bold text-ocean-light">{row.train_id}</td>
+                    <td className="p-3 text-ocean-peach font-bold">PLATFORM #{row.platform}</td>
+                    <td className="p-3 text-ocean-soft">{row.type}</td>
+                    <td className="p-3 text-ocean-light">{row.eta}</td>
                     <td className="p-3">
-                      <span className={`px-2 py-0.5 text-[10px] font-bold border ${
-                        row.status === 'INBOUND' ? 'border-orange-500 bg-orange-950 text-orange-400' : 'border-zinc-700 bg-zinc-900 text-zinc-300'
-                      }`}>
+                      <span className={`px-2 py-0.5 text-[10px] font-bold border ${row.status === 'INBOUND' ? 'border-ocean-mauve bg-ocean-mauve/20 text-ocean-mauve' : 'border-ocean-border bg-ocean-surface text-ocean-soft'
+                        }`}>
                         {row.status}
                       </span>
                     </td>
-                    <td className="p-3 font-bold text-yellow-400">
+                    <td className="p-3 font-bold text-ocean-peach">
                       {row.delay_min > 0 ? `+${row.delay_min} mins` : 'ON TIME'}
                     </td>
                   </tr>
