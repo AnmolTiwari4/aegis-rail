@@ -9,7 +9,7 @@ class Train(Base):
     train_id = Column(String, primary_key=True, index=True)
     locomotive_model = Column(String, nullable=False)
     max_capacity = Column(Integer, nullable=False) # Passenger capacity
-    max_weight = Column(Float, nullable=False)     # Tonnage limit in metric tons
+    max_weight = Column(Float, nullable=False)     # Train Weight or Total Load limit in metric tons
 
     schedules = relationship("Schedule", back_populates="train")
     telemetries = relationship("Telemetry", back_populates="train")
