@@ -1,21 +1,15 @@
 import './globals.css';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'Aegis-Rail Dispatch System',
-  description: 'Real-time train telemetry and conflict resolution matrix',
+  title: 'Aegis-Rail | Infrastructure & Transit Simulation',
+  description: 'Enterprise-grade rail transit simulation, bottleneck prediction, and rerouting control center.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-black text-zinc-100 antialiased selection:bg-orange-500 selection:text-black flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+      <body className="bg-[#050505] text-[#F1ECE6] antialiased selection:bg-[#7D4047] selection:text-white">
+        {children}
       </body>
     </html>
   );
