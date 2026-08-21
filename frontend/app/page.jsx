@@ -7,7 +7,7 @@ export default function AegisCommandCenter() {
 
   const [scenarioData, setScenarioData] = useState(null);
   const [kpiData, setKpiData] = useState({ active_trains: 4, delayed_trains: 1 });
-  const wsRef = useRef(null); 
+  const wsRef = useRef(null);
 
   const [countdown, setCountdown] = useState(60);
   const [actionExpired, setActionExpired] = useState(false);
@@ -38,13 +38,13 @@ export default function AegisCommandCenter() {
 
   useEffect(() => {
     const socket = new WebSocket(WS_URL);
-    socket.onopen = () => socket.send("NEXT"); 
+    socket.onopen = () => socket.send("NEXT");
     socket.onmessage = (event) => {
       setScenarioData(JSON.parse(event.data));
-      setCountdown(60); 
+      setCountdown(60);
       setActionExpired(false);
       setApproved(false);
-      setSelectedTrain(null); 
+      setSelectedTrain(null);
     };
     wsRef.current = socket;
     return () => socket.close();
@@ -66,7 +66,7 @@ export default function AegisCommandCenter() {
             showAction: false
           };
           setAlerts(prev => [autoAlert, ...prev]);
-        }, 3000); 
+        }, 3000);
         return () => clearTimeout(autoTimer);
       }
     }
@@ -75,7 +75,7 @@ export default function AegisCommandCenter() {
   useEffect(() => {
     let timer;
     if (approved || actionExpired) {
-      timer = setTimeout(() => { handleNextScenario(); }, 4000); 
+      timer = setTimeout(() => { handleNextScenario(); }, 4000);
     }
     return () => clearTimeout(timer);
   }, [approved, actionExpired]);
@@ -86,10 +86,10 @@ export default function AegisCommandCenter() {
         return setTimeout(() => {
           setAlerts(prev => {
             const newList = [...prev];
-            if(newList[index]) newList[index] = { ...newList[index], showAction: true };
+            if (newList[index]) newList[index] = { ...newList[index], showAction: true };
             return newList;
           });
-        }, 2000); 
+        }, 2000);
       }
       return null;
     });
@@ -105,7 +105,7 @@ export default function AegisCommandCenter() {
         handleApprove("AUTO-EXECUTED: Safety protocol engaged");
         setActionExpired(true);
       } else {
-        setApproved(true); 
+        setApproved(true);
       }
     }
   }, [countdown, actionExpired, approved, scenarioData, hasCriticalAlert]);
@@ -123,10 +123,10 @@ export default function AegisCommandCenter() {
       socket.onopen = () => socket.send("NEXT");
       socket.onmessage = (event) => {
         setScenarioData(JSON.parse(event.data));
-        setCountdown(60); 
+        setCountdown(60);
         setActionExpired(false);
         setApproved(false);
-        setSelectedTrain(null); 
+        setSelectedTrain(null);
       };
       wsRef.current = socket;
     }
@@ -143,7 +143,7 @@ export default function AegisCommandCenter() {
         body: JSON.stringify({
           scenario_id: scenarioData?.scenario?.scenario_id || 0,
           priority_train_id: priorityTrain,
-          action_taken: actionType 
+          action_taken: actionType
         })
       });
     } catch (error) { console.error("Failed to log approval"); }
@@ -175,19 +175,19 @@ export default function AegisCommandCenter() {
   // === CLASSIC X-INTERSECTION KINEMATIC MATH (60s Duration) ===
   const train1Id = scenarioData?.scenario?.train_1_id || "TR-801";
   const train2Id = scenarioData?.scenario?.train_2_id || "TR-404";
-  const train3Id = scenarioData ? `WAG-12 Freight (${10000 + (scenarioData.scenario.scenario_id * 7)})` : "TR-102"; 
-  const train4Id = scenarioData ? `EMU Local (${11000 + (scenarioData.scenario.scenario_id * 3)})` : "TR-909"; 
-  
-  const priorityTrain = scenarioData?.priority_train || train1Id; 
-  
-  let t1X = 100, t1Y = 150, t2X = 900, t2Y = 100, t3X = 100, t3Y = 400, t4X = 900, t4Y = 350; 
-  
+  const train3Id = scenarioData ? `WAG-12 Freight (${10000 + (scenarioData.scenario.scenario_id * 7)})` : "TR-102";
+  const train4Id = scenarioData ? `EMU Local (${11000 + (scenarioData.scenario.scenario_id * 3)})` : "TR-909";
+
+  const priorityTrain = scenarioData?.priority_train || train1Id;
+
+  let t1X = 100, t1Y = 150, t2X = 900, t2Y = 100, t3X = 100, t3Y = 400, t4X = 900, t4Y = 350;
+
   if (scenarioData) {
     const creep = 60 - countdown;
     if (approved || actionExpired) {
       t1X = priorityTrain === train1Id ? 900 : 420; t1Y = priorityTrain === train1Id ? 350 : 230;
       t2X = priorityTrain === train2Id ? 100 : 580; t2Y = priorityTrain === train2Id ? 400 : 220;
-      t3X = priorityTrain === train3Id ? 900 : 420; t3Y = priorityTrain === train3Id ? 100 : 280; 
+      t3X = priorityTrain === train3Id ? 900 : 420; t3Y = priorityTrain === train3Id ? 100 : 280;
       t4X = priorityTrain === train4Id ? 100 : 580; t4Y = priorityTrain === train4Id ? 150 : 270;
     } else {
       // Convergence math towards center (500, 250) over 60 seconds
@@ -201,9 +201,9 @@ export default function AegisCommandCenter() {
 
   return (
     <div className="min-h-screen w-full bg-[#111116] text-[#EAEAEA] font-mono selection:bg-[#B48599] selection:text-white pb-24 overflow-x-hidden">
-      
+
       <div className="max-w-[1600px] mx-auto px-6 mt-8 space-y-6">
-        
+
         <div className="flex justify-between items-end border-b border-[#282834] pb-4">
           <div>
             <h1 className="flex items-center gap-3 text-2xl font-bold uppercase tracking-widest">
@@ -213,28 +213,28 @@ export default function AegisCommandCenter() {
             <p className="mt-2 text-[10px] text-[#8A8A9E] tracking-widest uppercase flex flex-wrap items-center gap-2">
               <span>INTERSECTION CONVERGENCE & CONFLICT RESOLUTION</span>
               <span className="text-[#B48599] font-bold bg-[#B48599]/15 px-2.5 py-0.5 border border-[#B48599]/40 rounded-sm flex items-center gap-1.5 animate-pulse">
-                <span>🖱️</span> FOR TRAIN DETAILS, CLICK ON THE TRAINS
+                <span>🖱️</span> FOR TRAIN DETAILS, CLICK ON THE STATIONS
               </span>
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
+
           <div className="lg:col-span-2 flex flex-col gap-6">
-            
+
             {/* INTERSECTION MAP */}
             <div className="border border-[#282834] bg-[#1A1A22] p-1 flex flex-col relative h-[500px]">
               <div className="flex justify-between items-center px-4 py-3 border-b border-[#282834]">
                 <div className="flex items-center gap-3">
                   <h3 className="text-xs font-bold uppercase tracking-widest">JUNCTION CONFLICT MAP</h3>
                   <span className="hidden sm:inline-block text-[10px] text-[#B48599] font-bold tracking-widest uppercase bg-[#B48599]/15 px-2 py-0.5 border border-[#B48599]/40">
-                    FOR TRAIN DETAILS, CLICK ON THE TRAINS
+                    FOR TRAIN DETAILS, CLICK ON THE STATIONS
                   </span>
                 </div>
                 <span className="text-[10px] text-[#8A8A9E] tracking-widest">TIME_REMAINING: {countdown}s</span>
               </div>
-              
+
               <div className="flex-1 relative bg-[#0D0D12] overflow-hidden">
                 <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 500">
                   <defs>
@@ -242,10 +242,10 @@ export default function AegisCommandCenter() {
                       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1A1A22" strokeWidth="1" />
                     </pattern>
                   </defs>
-                  
+
                   <rect width="1000" height="500" fill="url(#grid)" />
                   <line x1="500" y1="0" x2="500" y2="500" stroke="#282834" strokeWidth="2" />
-                  
+
                   {/* Intersecting Tracks */}
                   <line x1="100" y1="150" x2="900" y2="350" stroke="#3A3A4C" strokeWidth="2" strokeDasharray="6 6" />
                   <line x1="100" y1="400" x2="900" y2="100" stroke="#3A3A4C" strokeWidth="2" strokeDasharray="6 6" />
@@ -276,7 +276,7 @@ export default function AegisCommandCenter() {
                       {train1Id} {hasCriticalAlert ? "[DELAYED]" : "[ACTIVE]"}
                     </text>
                   </g>
-                  
+
                   {/* TRAIN 2 */}
                   <g onClick={() => handleTrainClick(train2Id, scenarioData?.scenario?.train_2_type || "Express")} style={{ transform: `translate(${t2X}px, ${t2Y}px)`, transition: movementTransition, opacity: 1, cursor: 'pointer' }}>
                     <rect x="-20" y="-15" width="40" height="30" fill="#B48599" fillOpacity="0.15" stroke="#B48599" strokeWidth="1" className="animate-pulse" />
@@ -295,19 +295,17 @@ export default function AegisCommandCenter() {
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#EAEAEA] mb-4">
                 AUTOMATED & MANUAL INCIDENT LOGS
               </h3>
-              
+
               <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2 scrollbar-hide">
                 {alerts.map((alt) => (
-                  <div key={alt.id} className={`border p-4 transition-all ${
-                    alt.severity === 'CRITICAL' ? 'border-[#B48599] border-l-4 border-l-[#B48599] bg-[#2A1E24]/30' : 
-                    alt.severity === 'WARNING' ? 'border-amber-600/50 border-l-4 border-l-amber-500 bg-amber-900/10' :
-                    'border-emerald-900/50 border-l-4 border-l-emerald-600 bg-emerald-900/10'
-                  }`}>
+                  <div key={alt.id} className={`border p-4 transition-all ${alt.severity === 'CRITICAL' ? 'border-[#B48599] border-l-4 border-l-[#B48599] bg-[#2A1E24]/30' :
+                      alt.severity === 'WARNING' ? 'border-amber-600/50 border-l-4 border-l-amber-500 bg-amber-900/10' :
+                        'border-emerald-900/50 border-l-4 border-l-emerald-600 bg-emerald-900/10'
+                    }`}>
                     <div className="flex justify-between items-center mb-2">
                       <div className="text-xs font-bold tracking-widest text-[#EAEAEA]">{alt.id} <span className="text-[#8A8A9E]">[{alt.train_id}]</span></div>
-                      <div className={`px-2 py-0.5 text-[10px] font-bold tracking-widest border ${
-                        alt.severity === 'CRITICAL' ? 'bg-[#B48599]/10 text-[#B48599] border-[#B48599]' : 'bg-emerald-900/30 text-emerald-500 border-emerald-600'
-                      }`}>
+                      <div className={`px-2 py-0.5 text-[10px] font-bold tracking-widest border ${alt.severity === 'CRITICAL' ? 'bg-[#B48599]/10 text-[#B48599] border-[#B48599]' : 'bg-emerald-900/30 text-emerald-500 border-emerald-600'
+                        }`}>
                         {alt.severity}
                       </div>
                     </div>
@@ -326,28 +324,27 @@ export default function AegisCommandCenter() {
 
           {/* RIGHT CONTROLS */}
           <div className="lg:col-span-1 flex flex-col gap-6">
-            
+
             <button onClick={handleNextScenario} className="w-full bg-[#0D0D12] border border-[#282834] hover:border-[#B48599] text-[#EAEAEA] py-4 px-6 text-xs tracking-widest uppercase transition-all text-left flex justify-between items-center group">
               <span className="group-hover:text-[#B48599] transition-colors">LOAD NEXT SCENARIO</span>
               <span className="text-lg leading-none">⏭</span>
             </button>
 
             <div className="border border-[#282834] bg-[#1A1A22] p-6 space-y-4">
-               <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#EAEAEA] mb-4 border-b border-[#282834] pb-2">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#EAEAEA] mb-4 border-b border-[#282834] pb-2">
                 AI BOTTLENECK PROTOCOL
               </h3>
               <p className="text-xs text-[#8A8A9E] leading-relaxed min-h-[40px]">
                 {scenarioData?.ai_recommendation || "System monitoring for network conflicts..."}
               </p>
-              
+
               <button
                 onClick={() => handleApprove("Controller Overridden & Approved")}
                 disabled={actionExpired || approved || !scenarioData || !hasCriticalAlert}
-                className={`w-full py-4 font-bold tracking-widest text-[10px] uppercase transition-all ${
-                  approved ? 'bg-emerald-900/30 text-emerald-500 border border-emerald-600/50 cursor-default' : 
-                  !hasCriticalAlert ? 'bg-[#282834] text-[#EAEAEA] border border-[#3A3A4C] cursor-default' :
-                  'bg-[#B48599] text-[#111116] hover:bg-white shadow-[0_0_15px_rgba(180,133,153,0.2)]'
-                }`}
+                className={`w-full py-4 font-bold tracking-widest text-[10px] uppercase transition-all ${approved ? 'bg-emerald-900/30 text-emerald-500 border border-emerald-600/50 cursor-default' :
+                    !hasCriticalAlert ? 'bg-[#282834] text-[#EAEAEA] border border-[#3A3A4C] cursor-default' :
+                      'bg-[#B48599] text-[#111116] hover:bg-white shadow-[0_0_15px_rgba(180,133,153,0.2)]'
+                  }`}
               >
                 {approved ? 'REROUTE APPROVED ✓' : hasCriticalAlert ? `APPROVE REROUTE (${countdown}s)` : 'SYSTEM NOMINAL'}
               </button>
@@ -361,19 +358,19 @@ export default function AegisCommandCenter() {
               <form onSubmit={handleCustomAlertSubmit} className="space-y-4 text-xs tracking-wide text-[#EAEAEA]">
                 <div>
                   <label className="block text-[10px] text-[#8A8A9E] uppercase tracking-widest mb-1.5">Train ID</label>
-                  <input type="text" value={formData.train_id} onChange={(e) => setFormData({...formData, train_id: e.target.value})} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]" />
+                  <input type="text" value={formData.train_id} onChange={(e) => setFormData({ ...formData, train_id: e.target.value })} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[10px] text-[#8A8A9E] uppercase tracking-widest mb-1.5">Issue Type</label>
-                    <select value={formData.alert_type} onChange={(e) => setFormData({...formData, alert_type: e.target.value})} className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]">
+                    <select value={formData.alert_type} onChange={(e) => setFormData({ ...formData, alert_type: e.target.value })} className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]">
                       <option value="SPEED_VIOLATION">SPEED_VIOLATION</option>
                       <option value="SIGNAL_DELAY">SIGNAL_DELAY</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-[10px] text-[#8A8A9E] uppercase tracking-widest mb-1.5">Severity</label>
-                    <select value={formData.severity} onChange={(e) => setFormData({...formData, severity: e.target.value})} className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]">
+                    <select value={formData.severity} onChange={(e) => setFormData({ ...formData, severity: e.target.value })} className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]">
                       <option value="CRITICAL">CRITICAL</option>
                       <option value="WARNING">WARNING</option>
                     </select>
@@ -381,11 +378,11 @@ export default function AegisCommandCenter() {
                 </div>
                 <div>
                   <label className="block text-[10px] text-[#8A8A9E] uppercase tracking-widest mb-1.5">TRACK SECTOR</label>
-                  <input type="text" placeholder="e.g. Kanpur Switch B-4" value={formData.location} onChange={(e) => setFormData({...formData, location: e.target.value})} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]" />
+                  <input type="text" placeholder="e.g. Kanpur Switch B-4" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599]" />
                 </div>
                 <div>
                   <label className="block text-[10px] text-[#8A8A9E] uppercase tracking-widest mb-1.5">AUDIT DESCRIPTION</label>
-                  <textarea rows={2} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599] resize-none" />
+                  <textarea rows={2} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required className="w-full bg-[#0D0D12] border border-[#282834] p-2.5 outline-none focus:border-[#B48599] resize-none" />
                 </div>
                 <button type="submit" className="w-full bg-[#1A1A22] hover:bg-[#282834] text-[#EAEAEA] border border-[#282834] font-bold py-3 text-[10px] tracking-widest uppercase transition-colors">
                   + DISPATCH OVERRIDE
