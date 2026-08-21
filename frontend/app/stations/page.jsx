@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Aurora from '../../components/Aurora';
 
 export default function StationControlPage() {
   const [selectedStation, setSelectedStation] = useState('NDLS');
@@ -31,9 +32,13 @@ export default function StationControlPage() {
   return (
     <div className="w-full bg-ocean-bg min-h-screen p-4 md:p-6 font-mono space-y-6">
 
-      {/* Header & Station Selector */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-ocean-border bg-ocean-surface p-4">
-        <div>
+      {/* Header & Station Selector with Aurora Background */}
+      <div className="relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-ocean-border bg-ocean-surface p-4">
+        <div className="absolute inset-0 opacity-40 pointer-events-none">
+          <Aurora colorStops={["#281031", "#B48599", "#1E2230"]} speed={0.6} blend={0.6} amplitude={1.2} />
+        </div>
+
+        <div className="relative z-10">
           <h1 className="text-xl md:text-2xl font-bold uppercase text-ocean-light tracking-wider flex items-center gap-3">
             <span className="w-3 h-3 bg-ocean-mauve inline-block"></span>
             STATION CONTROL HUB  PLATFORM ALLOCATION
@@ -42,7 +47,7 @@ export default function StationControlPage() {
         </div>
 
         {/* Station Tabs */}
-        <div className="flex gap-2">
+        <div className="relative z-10 flex gap-2">
           {stationsList.map((stn) => (
             <button
               key={stn}
