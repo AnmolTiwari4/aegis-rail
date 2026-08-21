@@ -4,13 +4,27 @@ import { useState, useEffect } from 'react';
 import Aurora from '../../components/Aurora';
 
 export default function StationControlPage() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
   const [selectedStation, setSelectedStation] = useState('NDLS');
-  const [stationData, setStationData] = useState(null);
+  const [stationData, setStationData] = useState({
+    station_id: 'NDLS',
+    station_name: 'NDLS Central Hub',
+    platforms_count: 16,
+    active_trains_count: 8,
+    manifest: [
+      { train_id: "TR-801", platform: 4, type: "PASSENGER", eta: "10:15 AM", status: "INBOUND", delay_min: 3 },
+      { train_id: "TR-202", platform: 1, type: "EXPRESS", eta: "10:30 AM", status: "OUTBOUND", delay_min: 0 },
+      { train_id: "TR-909", platform: 7, type: "SUPERFAST", eta: "11:00 AM", status: "INBOUND", delay_min: 0 },
+      { train_id: "TR-102", platform: 12, type: "FREIGHT", eta: "11:45 AM", status: "OUTBOUND", delay_min: 15 },
+    ]
+  });
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/v1/stations/${selectedStation}`)
-      .then((res) => res.json())
-      .then((data) => setStationData(data))
+    fetch(`${API_URL}/api/v1/stations/${selectedStation}`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data && data.manifest) setStationData(data);
+      })
       .catch(() => {
         setStationData({
           station_id: selectedStation,
@@ -20,12 +34,12 @@ export default function StationControlPage() {
           manifest: [
             { train_id: "TR-801", platform: 4, type: "PASSENGER", eta: "10:15 AM", status: "INBOUND", delay_min: 3 },
             { train_id: "TR-202", platform: 1, type: "EXPRESS", eta: "10:30 AM", status: "OUTBOUND", delay_min: 0 },
-            { train_id: "TR-909", platform: 7, type: "SUPERFAST", eta: "11:00 AM", status: "INBOUND", delay_min: -1 },
+            { train_id: "TR-909", platform: 7, type: "SUPERFAST", eta: "11:00 AM", status: "INBOUND", delay_min: 0 },
             { train_id: "TR-102", platform: 12, type: "FREIGHT", eta: "11:45 AM", status: "OUTBOUND", delay_min: 15 },
           ]
         });
       });
-  }, [selectedStation]);
+  }, [selectedStation, API_URL]);
 
   const stationsList = ['NDLS', 'CSTM', 'MAS', 'HWH'];
 
@@ -78,7 +92,7 @@ export default function StationControlPage() {
           {/* Gantt Matrix Grid */}
           <div className="space-y-3 pt-2">
             {[1, 2, 4, 7, 12].map((platformNum) => {
-              const assignedTrain = stationData?.manifest.find((m) => m.platform === platformNum);
+              const assignedTrain = stationData?.manifest?.find((m) => m.platform === platformNum);
 
               return (
                 <div key={platformNum} className="flex items-center gap-4 text-xs">
@@ -130,7 +144,7 @@ export default function StationControlPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-ocean-border">
-                {stationData?.manifest.map((row) => (
+                {(stationData?.manifest || []).map((row) => (
                   <tr key={row.train_id} className="hover:bg-ocean-hover/50 transition-colors">
                     <td className="p-3 font-bold text-ocean-light">{row.train_id}</td>
                     <td className="p-3 text-ocean-peach font-bold">PLATFORM #{row.platform}</td>
