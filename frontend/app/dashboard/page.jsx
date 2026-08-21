@@ -32,7 +32,7 @@ export default function DashboardPage() {
           <p className="text-ocean-soft text-xs mt-1 flex flex-wrap items-center gap-2">
             <span>REAL-TIME SPATIAL POSITIONING & NETWORK HEALTH</span>
             <span className="text-ocean-peach font-bold bg-ocean-peach/10 px-2 py-0.5 border border-ocean-peach/30 text-[10px]">
-              FOR TRAIN DETAILS, CLICK ON THE TRAINS
+              FOR TRAIN DETAILS, CLICK ON THE STATIONS
             </span>
           </p>
         </div>
