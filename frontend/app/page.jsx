@@ -221,8 +221,11 @@ export default function AegisCommandCenter() {
               <div className="h-3 w-3 bg-[#B48599]"></div>
               NETWORK COMMAND CENTER
             </h1>
-            <p className="mt-2 text-[10px] text-[#8A8A9E] tracking-widest uppercase">
-              INTERSECTION CONVERGENCE & CONFLICT RESOLUTION
+            <p className="mt-2 text-[10px] text-[#8A8A9E] tracking-widest uppercase flex flex-wrap items-center gap-2">
+              <span>INTERSECTION CONVERGENCE & CONFLICT RESOLUTION</span>
+              <span className="text-[#B48599] font-bold bg-[#B48599]/15 px-2.5 py-0.5 border border-[#B48599]/40 rounded-sm flex items-center gap-1.5 animate-pulse">
+                <span>🖱️</span> FOR TRAIN DETAILS, CLICK ON THE TRAINS
+              </span>
             </p>
           </div>
         </div>
@@ -234,7 +237,12 @@ export default function AegisCommandCenter() {
             {/* INTERSECTION MAP */}
             <div className="border border-[#282834] bg-[#1A1A22] p-1 flex flex-col relative h-[500px]">
               <div className="flex justify-between items-center px-4 py-3 border-b border-[#282834]">
-                <h3 className="text-xs font-bold uppercase tracking-widest">JUNCTION CONFLICT MAP</h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="text-xs font-bold uppercase tracking-widest">JUNCTION CONFLICT MAP</h3>
+                  <span className="hidden sm:inline-block text-[10px] text-[#B48599] font-bold tracking-widest uppercase bg-[#B48599]/15 px-2 py-0.5 border border-[#B48599]/40">
+                    FOR TRAIN DETAILS, CLICK ON THE TRAINS
+                  </span>
+                </div>
                 <span className="text-[10px] text-[#8A8A9E] tracking-widest">TIME_REMAINING: {countdown}s</span>
               </div>
               
