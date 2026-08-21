@@ -40,14 +40,14 @@ export default function Footer() {
           <h4 className="text-ocean-peach font-bold text-xs tracking-widest uppercase mb-3 border-b border-ocean-border pb-1">
             DISPATCH SUPPORT
           </h4>
-          <p className="text-xs text-ocean-soft">EMERGENCY HOTLINE: <span className="text-ocean-light font-bold">+91 1800 1234</span></p>
+          <p className="text-xs text-ocean-soft">EMERGENCY HOTLINE: <span className="text-ocean-light font-bold">+91 1800 0081</span></p>
           <p className="text-xs text-ocean-soft mt-1">SECURE NETWORK: <span className="text-ocean-mauve">GRID-NET-SEC-7</span></p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto border-t border-ocean-dark/40 mt-8 pt-4 flex flex-col md:flex-row justify-between items-center text-[11px] text-ocean-soft">
         <span>© 2026 AEGIS-RAIL DISPATCH SYSTEMS. STRICTLY CONFIDENTIAL.</span>
-        
+
       </div>
     </footer>
   );
