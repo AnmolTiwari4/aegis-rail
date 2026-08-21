@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useWebSocketTelemetry } from '../../hooks/useWebSocketTelemetry';
+import BorderGlow from '../../components/BorderGlow';
 
 export default function DashboardPage() {
   const { telemetryData, isConnected } = useWebSocketTelemetry();
@@ -28,7 +29,12 @@ export default function DashboardPage() {
             <span className="w-3 h-3 bg-ocean-mauve inline-block"></span>
             Main Network Map
           </h1>
-          <p className="text-ocean-soft text-xs mt-1">REAL-TIME SPATIAL POSITIONING & NETWORK HEALTH</p>
+          <p className="text-ocean-soft text-xs mt-1 flex flex-wrap items-center gap-2">
+            <span>REAL-TIME SPATIAL POSITIONING & NETWORK HEALTH</span>
+            <span className="text-ocean-peach font-bold bg-ocean-peach/10 px-2 py-0.5 border border-ocean-peach/30 text-[10px]">
+              FOR TRAIN DETAILS, CLICK ON THE TRAINS
+            </span>
+          </p>
         </div>
 
         <div className="flex items-center gap-4">
@@ -42,25 +48,55 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* KPI Cards Row */}
+      {/* KPI Cards Row with BorderGlow */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="border border-ocean-border bg-ocean-surface p-4 border-l-4 border-l-ocean-mauve">
-          <span className="text-ocean-soft text-xs block">Active Trains or Running Trains</span>
-          <div className="text-3xl font-extrabold text-ocean-light mt-1">{totalActive}</div>
-          <span className="text-[10px] text-ocean-peach mt-2 block">TRACK SECTORS FULLY MONITORED</span>
-        </div>
+        <BorderGlow
+          backgroundColor="#1E2230"
+          borderRadius={8}
+          glowColor="280 70 65"
+          colors={['#b48599', '#e0b0c4', '#8a5068']}
+          glowRadius={30}
+          glowIntensity={1.2}
+          edgeSensitivity={40}
+        >
+          <div className="p-4 border-l-4 border-l-ocean-mauve">
+            <span className="text-ocean-soft text-xs block">Active Trains or Running Trains</span>
+            <div className="text-3xl font-extrabold text-ocean-light mt-1">{totalActive}</div>
+            <span className="text-[10px] text-ocean-peach mt-2 block">TRACK SECTORS FULLY MONITORED</span>
+          </div>
+        </BorderGlow>
 
-        <div className="border border-ocean-border bg-ocean-surface p-4 border-l-4 border-l-ocean-peach">
-          <span className="text-ocean-soft text-xs block">DELAYED TRAINS</span>
-          <div className="text-3xl font-extrabold text-ocean-peach mt-1">{delayedCount}</div>
-          <span className="text-[10px] text-ocean-soft mt-2 block">Delay Time or Minutes Late &gt; +10 MINS</span>
-        </div>
+        <BorderGlow
+          backgroundColor="#1E2230"
+          borderRadius={8}
+          glowColor="25 85 65"
+          colors={['#e08e79', '#f2b8a0', '#c2644e']}
+          glowRadius={30}
+          glowIntensity={1.2}
+          edgeSensitivity={40}
+        >
+          <div className="p-4 border-l-4 border-l-ocean-peach">
+            <span className="text-ocean-soft text-xs block">DELAYED TRAINS</span>
+            <div className="text-3xl font-extrabold text-ocean-peach mt-1">{delayedCount}</div>
+            <span className="text-[10px] text-ocean-soft mt-2 block">Delay Time or Minutes Late &gt; +10 MINS</span>
+          </div>
+        </BorderGlow>
 
-        <div className="border border-ocean-border bg-ocean-surface p-4 border-l-4 border-l-ocean-light">
-          <span className="text-ocean-soft text-xs block">CRITICAL ALERTS / OVERRIDES</span>
-          <div className="text-3xl font-extrabold text-ocean-mauve mt-1">{criticalCount}</div>
-          <span className="text-[10px] text-ocean-mauve mt-2 block">IMMEDIATE DISPATCH ATTENTION REQ.</span>
-        </div>
+        <BorderGlow
+          backgroundColor="#1E2230"
+          borderRadius={8}
+          glowColor="340 80 60"
+          colors={['#f472b6', '#b48599', '#ef4444']}
+          glowRadius={30}
+          glowIntensity={1.2}
+          edgeSensitivity={40}
+        >
+          <div className="p-4 border-l-4 border-l-ocean-light">
+            <span className="text-ocean-soft text-xs block">CRITICAL ALERTS / OVERRIDES</span>
+            <div className="text-3xl font-extrabold text-ocean-mauve mt-1">{criticalCount}</div>
+            <span className="text-[10px] text-ocean-mauve mt-2 block">IMMEDIATE DISPATCH ATTENTION REQ.</span>
+          </div>
+        </BorderGlow>
       </div>
 
       {/* Main Grid: Interactive Map & Live Feed Panel */}
