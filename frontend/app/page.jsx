@@ -202,17 +202,6 @@ export default function AegisCommandCenter() {
   return (
     <div className="min-h-screen w-full bg-[#111116] text-[#EAEAEA] font-mono selection:bg-[#B48599] selection:text-white pb-24 overflow-x-hidden">
       
-      <nav className="flex items-center justify-between border-b border-[#282834] bg-[#1A1A22] px-6 py-4 text-xs tracking-widest uppercase shadow-md">
-        <div className="flex items-center gap-3">
-          <div className="flex h-6 w-6 items-center justify-center bg-[#B48599] font-bold text-[#111116]">A</div>
-          <span className="text-lg font-bold">AEGIS-RAIL</span>
-        </div>
-        <div className="flex items-center gap-2 border border-[#282834] px-3 py-1 bg-[#111116]">
-          <div className="h-2 w-2 bg-[#B48599] animate-pulse rounded-full"></div>
-          <span className="text-[#8A8A9E] font-bold">LIVE TELEMETRY</span>
-        </div>
-      </nav>
-
       <div className="max-w-[1600px] mx-auto px-6 mt-8 space-y-6">
         
         <div className="flex justify-between items-end border-b border-[#282834] pb-4">
