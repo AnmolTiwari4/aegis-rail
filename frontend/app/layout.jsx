@@ -1,4 +1,6 @@
 import './globals.css';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export const metadata = {
   title: 'Aegis-Rail | Infrastructure & Transit Simulation',
@@ -8,8 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#050505] text-[#F1ECE6] antialiased selection:bg-[#7D4047] selection:text-white">
-        {children}
+      <body className="bg-ocean-bg text-ocean-light min-h-screen flex flex-col antialiased selection:bg-ocean-mauve selection:text-white font-mono">
+        <Navbar />
+        <main className="flex-1 w-full">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
